@@ -70,7 +70,7 @@ email_auto_response/
 ### 🔹 1. Clone / Download Project
 
 ```
-git clone <your-repo-link>
+git clone https://github.com/Anushka6451/Automatic-email-response-system.git
 cd email_auto_response
 ```
 
