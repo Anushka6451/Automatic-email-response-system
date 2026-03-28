@@ -11,6 +11,7 @@ This project is an **Automatic Email Response System for Citizens** that:
 
 It is designed to reduce manual effort in handling large volumes of citizen queries.
 
+---
 
 ## 🎯 Features
 
@@ -32,9 +33,11 @@ It is designed to reduce manual effort in handling large volumes of citizen quer
 * joblib (model saving/loading)
 * HTML/CSS (dashboard)
 
+---
 
 ## 📁 Project Structure
 
+```
 email_auto_response/
 │
 ├── app/
@@ -58,65 +61,88 @@ email_auto_response/
 ├── config.py
 ├── requirements.txt
 └── emails.db
+```
 
+---
 
 ## ⚙️ Setup Instructions
 
 ### 🔹 1. Clone / Download Project
 
+```
 git clone <your-repo-link>
 cd email_auto_response
+```
 
+---
 
 ### 🔹 2. Create Virtual Environment
 
+```
 python -m venv venv
 venv\Scripts\activate
+```
 
+---
 
 ### 🔹 3. Install Dependencies
 
-
+```
 pip install pandas scikit-learn joblib
 pip install beautifulsoup4
+```
 
+---
 
 ### 🔹 4. Configure Email Credentials
 
 Edit `config.py`:
 
-python
+```python
 EMAIL_ACCOUNT = "your_email@gmail.com"
 EMAIL_PASSWORD = "your_app_password"
 IMAP_HOST = "imap.gmail.com"
+```
 
 ⚠️ Use **App Password**, not your real Gmail password.
 
+---
 
 ### 🔹 5. Train the ML Model
 
 Go to ML folder:
 
+```
 cd ML_model
 python train_model.py
+```
 
 ✔ This will generate:
 
+```
 model.pkl
+```
 
+---
 
 ### 🔹 6. Run the System
 
 Go back to root folder:
 
+```
 cd ..
 python -m app.main
+```
 
+---
 
 ## 🔄 System Workflow
 
+```
 Email → Read → Parse → ML Model → Category → Generate Response → Send Email
+```
 
+---
 
 ## 📊 Categories Supported
 
@@ -136,12 +162,18 @@ Email → Read → Parse → ML Model → Category → Generate Response → Sen
 
 ### Input Email:
 
+```
 "I want a refund for my order"
+```
 
 ### Output:
 
+```
 Category: refund  
 Response: Your refund request has been received...
+```
+
+---
 
 ## ⚠️ Common Errors & Fixes
 
@@ -150,8 +182,11 @@ Response: Your refund request has been received...
 ✔ Ensure correct imports and folder names
 ✔ Run using:
 
+```
 python -m app.main
+```
 
+---
 
 ### ❌ model.pkl not found
 
