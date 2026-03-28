@@ -1,37 +1,43 @@
-# 📧 Automatic Email Response System (AI-Powered)
-
-## 🚀 Overview
-
-This project is an **Automatic Email Response System for Citizens** that:
-
-* Reads incoming emails using IMAP
-* Classifies them using a **Machine Learning model**
-* Generates appropriate responses
-* Sends replies automatically using SMTP
-
-It is designed to reduce manual effort in handling large volumes of citizen queries.
+# 📧 AI-Powered Automatic Email Response System with Real-Time Dashboard
 
 ---
 
-## 🎯 Features
+## 🚀 Project Overview
 
-* 📥 Fetch unread emails automatically
-* 🧠 ML-based email classification
-* ✉️ Auto-response generation
-* 📊 Clean modular architecture
-* 💾 SQLite database support
-* 🌐 Dashboard (optional UI)
+This project is an **AI-based Automatic Email Response System** designed for handling citizen queries efficiently.
+
+It:
+
+* 📥 Reads incoming emails using IMAP
+* 🧠 Classifies emails using a Machine Learning model
+* ✉️ Sends automated responses via SMTP
+* 💾 Stores email data in a database
+* 📊 Displays insights in a **real-time dashboard**
+
+---
+
+## 🎯 Key Features
+
+* 🤖 ML-based email classification
+* 📬 Automated email responses
+* ⚡ Real-time dashboard (auto-updating)
+* 🔍 Search & filtering in dashboard
+* 🔔 Live notifications (new email alert)
+* 🌙 Dark mode UI
+* 🗄️ SQLite database integration
 
 ---
 
 ## 🧠 Technologies Used
 
 * Python
-* IMAP & SMTP (Email handling)
-* scikit-learn (ML model)
-* pandas (data processing)
-* joblib (model saving/loading)
-* HTML/CSS (dashboard)
+* Flask (API backend)
+* scikit-learn (Machine Learning)
+* pandas (data handling)
+* joblib (model serialization)
+* IMAP & SMTP (email protocols)
+* HTML, CSS, JavaScript (dashboard UI)
+* Chart.js (data visualization)
 
 ---
 
@@ -42,37 +48,34 @@ email_auto_response/
 │
 ├── app/
 │   ├── main.py
+│   ├── api.py
 │   ├── email_reader.py
 │   ├── email_sender.py
 │   ├── database.py
-│   ├── response_generator.py
-│   ├── scheduler.py
 │
-├── ML_model/
+├── model/
 │   ├── train_model.py
-│   ├── predictions.py
+│   ├── predict.py
 │   ├── dataset.csv
 │   ├── model.pkl
-│   └── __init__.py
 │
 ├── dashboard/
 │   └── index.html
 │
 ├── config.py
 ├── requirements.txt
-└── emails.db
+├── emails.db
+└── README.md
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Environment Setup
 
-### 🔹 1. Clone / Download Project
+### 🔹 1. Install Python
 
-```
-git clone https://github.com/Anushka6451/Automatic-email-response-system.git
-cd email_auto_response
-```
+* Recommended: **Python 3.10 – 3.12**
+* Minimum: Python 3.8+
 
 ---
 
@@ -87,37 +90,54 @@ venv\Scripts\activate
 
 ### 🔹 3. Install Dependencies
 
+Create `requirements.txt`:
+
 ```
-pip install pandas scikit-learn joblib
-pip install beautifulsoup4
+flask
+pandas
+scikit-learn
+joblib
+beautifulsoup4
+```
+
+Install:
+
+```
+pip install -r requirements.txt
 ```
 
 ---
 
-### 🔹 4. Configure Email Credentials
+## 📧 Email Configuration (IMPORTANT)
 
 Edit `config.py`:
 
-```python
+```
 EMAIL_ACCOUNT = "your_email@gmail.com"
 EMAIL_PASSWORD = "your_app_password"
 IMAP_HOST = "imap.gmail.com"
 ```
 
-⚠️ Use **App Password**, not your real Gmail password.
+---
+
+### ⚠️ Gmail Setup
+
+You MUST:
+
+1. Enable **2-Step Verification**
+2. Generate **App Password**
+3. Use App Password instead of normal password
 
 ---
 
-### 🔹 5. Train the ML Model
-
-Go to ML folder:
+## 🧠 Train Machine Learning Model
 
 ```
-cd ML_model
+cd model
 python train_model.py
 ```
 
-✔ This will generate:
+This will generate:
 
 ```
 model.pkl
@@ -125,13 +145,41 @@ model.pkl
 
 ---
 
-### 🔹 6. Run the System
+## 🗄️ Database
 
-Go back to root folder:
+* Uses **SQLite (built-in)**
+* File auto-created:
 
 ```
-cd ..
+emails.db
+```
+
+---
+
+## 🚀 Running the System
+
+---
+
+### ▶️ Step 1: Start Email Processor
+
+```
 python -m app.main
+```
+
+---
+
+### ▶️ Step 2: Start Dashboard API
+
+```
+python app/api.py
+```
+
+---
+
+### ▶️ Step 3: Open Dashboard
+
+```
+dashboard/index.html
 ```
 
 ---
@@ -139,37 +187,34 @@ python -m app.main
 ## 🔄 System Workflow
 
 ```
-Email → Read → Parse → ML Model → Category → Generate Response → Send Email
+Email → Read → Parse → ML Model → Category → Save → Respond → Dashboard Update
 ```
 
 ---
 
-## 📊 Categories Supported
+## 📊 Dashboard Features
 
-* Refund
-* Delivery Issue
-* Complaint
-* Inquiry
-* Payment Issue
-* Return
-* Cancellation
-* Feedback
-* Technical Issue
+* 📈 Category distribution charts
+* 📊 Email statistics (total, processed)
+* 🧾 Recent emails table
+* 🔍 Search functionality
+* 🔔 Live notifications
+* 🌙 Dark mode
 
 ---
 
 ## 📌 Example
 
-### Input Email:
+**Input Email:**
 
 ```
 "I want a refund for my order"
 ```
 
-### Output:
+**System Output:**
 
 ```
-Category: refund  
+Category: refund
 Response: Your refund request has been received...
 ```
 
@@ -179,70 +224,94 @@ Response: Your refund request has been received...
 
 ### ❌ ModuleNotFoundError
 
-✔ Ensure correct imports and folder names
-✔ Run using:
-
 ```
-python -m app.main
+pip install <package>
 ```
 
 ---
 
 ### ❌ model.pkl not found
 
-✔ Train model first
-✔ Fix path using `os.path.join`
+```
+python train_model.py
+```
 
 ---
 
-### ❌ CSV parsing error
+### ❌ Gmail authentication failed
 
-✔ Use quotes around text with commas
+* Use App Password
+* Enable IMAP
 
 ---
 
-### ❌ SMTP errors
+### ❌ Dashboard not updating
 
-✔ Use App Password
-✔ Enable less secure apps (if needed)
+* Ensure Flask API running:
+
+```
+http://127.0.0.1:5000/stats
+```
+
+---
+
+### ❌ Auto-reply loop issue
+
+Add filter in `main.py`:
+
+```
+if any(x in from_.lower() for x in ["postmaster", "noreply", "no-reply"]):
+    continue
+```
+
+---
+
+## 🏆 Why This Project is Placement-Ready
+
+* Full-stack architecture
+* Real-time dashboard
+* ML integration
+* Clean modular code
+* Practical real-world use case
+
+---
+
+## 💼 How to Explain in Interview
+
+```
+This system automates email handling using machine learning.
+It classifies incoming emails into categories and sends responses automatically.
+A real-time dashboard built using Flask and JavaScript provides analytics
+and monitoring of email activity.
+```
 
 ---
 
 ## 🚀 Future Enhancements
 
-* 🤖 AI-generated dynamic responses
-* 📊 Real-time dashboard integration
-* 📈 Model accuracy tracking
-* ☁️ Cloud deployment
+* 🤖 GPT-based dynamic responses
 * 🔐 Authentication system
-
----
-
-## 🏆 Conclusion
-
-This project demonstrates:
-
-* Practical use of **Machine Learning in automation**
-* Integration of **email systems with AI**
-* Real-world application for **citizen services**
+* ☁️ Cloud deployment (AWS / Render)
+* 📈 Model accuracy tracking
+* 📊 Advanced analytics
 
 ---
 
 ## 👩‍💻 Author
 
-Developed as part of an academic project on:
-**“Automatic Email Response System for Citizens”**
+**Automatic Email Response System for Citizens**
+Anushka 
 
 ---
 
 ## ⭐ Tip
 
-For best results:
+To improve performance:
 
-* Use more dataset samples
-* Improve model accuracy
-* Add dynamic AI responses
+* Add more training data
+* Tune ML model
+* Improve UI/UX
 
 ---
 
-💡 Your system is now **fully automated + AI-powered** 🚀
+💡 Your system is now **AI-powered + real-time + industry-ready** 🚀
