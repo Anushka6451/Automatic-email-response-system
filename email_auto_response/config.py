@@ -1,0 +1,5 @@
+EMAIL_ACCOUNT = "YOUR_EMAIL"
+EMAIL_PASSWORD = "YOUR_PASSWORD"
+IMAP_HOST = "imap.gmail.com"
+SMTP_HOST = "smtp.gmail.com"
+SMTP_PORT = 465

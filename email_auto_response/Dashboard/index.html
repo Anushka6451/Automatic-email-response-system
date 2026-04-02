@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Email Intelligence Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
+.header {
+    padding: 20px;
+    text-align: center;
+    font-size: 22px;
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+}
+
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.big {
+    font-size: 32px;
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+.sub {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.full {
+    grid-column: span 3;
+}
+
+.progress {
+    height: 8px;
+    background: #334155;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #38bdf8;
+}
+
+canvas {
+    max-height: 250px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🚀 AI Email Intelligence Dashboard</div>
+
+<div class="container">
+
+<div class="grid">
+
+    <div class="card">
+        <div class="sub">Total Emails</div>
+        <div class="big" id="total">0</div>
+    </div>
+
+    <div class="card">
+        <div class="sub">Top Category</div>
+        <div class="big" id="topCategory">-</div>
+    </div>
+
+    <div class="card">
+        <div class="sub">System Status</div>
+        <div class="big" style="color:#22c55e;">Active</div>
+    </div>
+
+    <div class="card full">
+        <h3>📊 Category Distribution</h3>
+        <canvas id="pieChart"></canvas>
+    </div>
+
+    <div class="card full">
+        <h3>📈 Category Comparison</h3>
+        <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="card full">
+        <h3>📌 Category Breakdown</h3>
+        <div id="breakdown"></div>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+let pieChart, barChart;
+
+async function loadData() {
+    const res = await fetch("http://127.0.0.1:5000/stats");
+    const data = await res.json();
+
+    document.getElementById("total").innerText = data.total;
+
+    const labels = Object.keys(data.categories);
+    const values = Object.values(data.categories);
+
+    // TOP CATEGORY
+    let max = Math.max(...values);
+    let top = labels[values.indexOf(max)];
+    document.getElementById("topCategory").innerText = top;
+
+    // PROGRESS BARS
+    let html = "";
+    labels.forEach((label, i) => {
+        let percent = ((values[i] / data.total) * 100).toFixed(1);
+
+        html += `
+        <div style="margin-bottom:10px;">
+            <div>${label} (${values[i]})</div>
+            <div class="progress">
+                <div class="progress-bar" style="width:${percent}%"></div>
+            </div>
+        </div>`;
+    });
+
+    document.getElementById("breakdown").innerHTML = html;
+
+    // Destroy old charts
+    if (pieChart) pieChart.destroy();
+    if (barChart) barChart.destroy();
+
+    // PIE
+    pieChart = new Chart(document.getElementById("pieChart"), {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{ data: values }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // BAR
+    barChart = new Chart(document.getElementById("barChart"), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{ data: values }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+}
+
+loadData();
+setInterval(loadData, 5000);
+</script>
+
+</body>
+</html>
